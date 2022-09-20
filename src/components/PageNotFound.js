@@ -12,7 +12,11 @@ class PageNotFound extends Component {
           404!
         </Typography>
         <h4>Page Not Found...</h4>
-        <Link to="/"><Button variant="contained" color='success'>Back to Home</Button></Link>
+        <Link to="/">
+          <Button variant="contained" color="success">
+            Back to Home
+          </Button>
+        </Link>
       </div>
     );
   }

@@ -3,9 +3,7 @@ import { useSelector } from "react-redux";
 import {
   Card,
   CardContent,
-  CardMedia,
   Typography,
-  Box,
   Button,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
@@ -13,196 +11,196 @@ import HeaderTwo from "./HeaderTwo";
 //import { fontSize } from "@mui/system";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { useNavigate } from "react-router-dom";
+import LocationOnIcon from "@mui/icons-material/LocationOn";
 
-const useStyles = makeStyles({
-  div: {
-    display: "flex",
-    flexDirection: "row",
-    justifyContent: "space-between",
-    alignContent: "center",
-  },
-  span: {
-    fontSize: "20px",
-    marginBottom: "8px",
-    color: "rgb(38, 38, 38)",
-    fontWeight: "600px",
-    fontFamily: '"Averta", Helvetica, Arial, sans-serif',
-  },
-  content: {
+const useStyles = makeStyles((theme) => ({
+  newdiv2: {
     display: "flex",
     flexDirection: "column",
     justifyContent: "center",
-    alignItems: "flex-start",
+  },
+  card1: {
+    width: "370px",
+    height: "320px",
+
+    "&:hover": { transform: "scale3d(1.03, 1.03, 1) !important" },
+  },
+  card2: {
+    width: "430px",
+    height: "320px",
+    marginLeft: "31px !important",
+    [theme.breakpoints.down("md")]: {
+      marginLeft: "-1px !important",
+      width: "370px",
+    },
   },
   img1: {
-    paddingTop: "18px",
-    height: "370px",
-    width: "570px",
-    alt: "picture",
-    "&:hover": { transform: "scale3d(1.07, 1.07, 1) !important" },
-  },
-  media: {
-    display: "grid",
-    flexDirection: "row",
-    flexWrap: "wrap",
-    paddingRight: "12px",
-  },
-  Imgcard: {
-    width: "300px",
-    height: "220px",
-  },
-  box: {
-    display: "flex",
-    justifyContent: "space-around",
-    alignItems: "center",
-    flexWrap: "wrap",
-  },
-  div1: {
-    border: "0.2px solid grey",
-    borderRadius: "12px",
-    display: "flex",
-    flexDirection: "column",
-    justifyContent: "space-between",
-    marginLeft: "20px",
-    marginTop: "9px",
-    width: "190px",
-    height: "180px",
-    paddingTop: "12px",
-  },
-  But1: {
-    height: "70px",
-    width: "180px",
-    marginTop: "60px !important",
-    border: "0 solid #e2e8f0",
-  },
-  But2:{
-    height: "70px",
-    width: "180px",
-    marginTop: "60px !important",
-    border: "0 solid #e2e8f0",
-    marginRight:'20px !important'
-  },
-  book: {
-    fontFamily: '"Soleil",sans-serif',
-    fontSize: "20px",
-    fontWeight: "20px",
-  },
-  title: {
-    fontFamily: '"Soleil",sans-serif',
-    fontSize: "20px",
-    fontWeight: "20px",
-    color: "blue",
-  },
-
-  Free: {
-    color: "rgba(45,55,72,var(--text-opacity))",
-    padding: ".75rem",
-    border: "0.8px solid grey",
-    height: "20px",
-    fontFamily: '"Soleil",sans-serif',
-    lineHeight: "1.5px",
-    borderOpacity: "1px",
+    width: "350px",
+    height: "280px",
   },
   div2: {
     display: "flex",
-    flexDirection: "column",
-    //alignItems:'center',
-    marginRight: "80px",
+    [theme.breakpoints.down("md")]: {
+      flexDirection: "column",
+      marginLeft: "58px",
+      // paddingLeft:'32px',
+      // paddingDown:'12px'
+    },
+    flexDirection: "row",
+    justifyContent: "center",
+    paddingTop: "19px",
   },
-  content: {
-    display: "flex !important",
-    flexDirection: "column !important",
-    alignContent: "flex-start !important",
-    justifyContent: "space-between !important",
-  },
-  card2content: {
-    marginBottom: "20px",
-    marginTop: "8px",
+  newdiv3: {
+    paddingTop: "22px",
+    paddingLeft: "0px",
     display: "flex",
     flexDirection: "column",
     alignItems: "flex-start",
-    paddingLeft: "9px",
-    paddingTop: "4px",
-  },
-  card: {
-    marginTop: "12px",
-    
-  },
-  card2: {
-    marginTop: "12px",
-    color: "ButtonFace !important",
-    width:'250px'
-  },
-  div4: {
-    display: "flex",
-    justifyContent: "space-around",
-  },
-  info: {
-    width: "420px",
+    justifyContent: "flex-start",
+    color: "rgba(45,55,72,var(--text-opacity))",
+    padding: ".75rem",
+    height: "20px",
     fontFamily: '"Soleil",sans-serif',
-    fontSize: "20px",
-    fontWeight: "20px",
-    color: "black",
   },
   event: {
     border: ".1px solid white",
     borderRadius: "12px",
     padding: "10px",
-    backgroundColor: "grey",
-    color: "whitesmoke",
+    backgroundColor: "whitesmoke",
+    color: "grey",
+    marginBottom: "12px",
   },
-});
+  But1: {
+    height: "40px",
+    width: "120px",
+    marginTop: "20px !important",
+    border: "0 solid #e2e8f0",
+    padding: "50px 50px",
+  },
+  But2: {
+    height: "40px",
+    width: "80px",
+    marginTop: "20px !important",
+    border: "0 solid #e2e8f0",
+    marginRight: "20px !important",
+  },
+  span: {
+    color: "blue",
+  },
+  headertwo: {
+    display: "none",
+    [theme.breakpoints.down("md")]: {
+      display: "none",
+    },
+  },
+}));
 
 function Details() {
   const classes = useStyles();
   const details = useSelector((state) => state.ticket);
   const navig = useNavigate();
-  const {
-    name,
-    url,
-    images,
-    dates,
-    info,
-    pleaseNote,
-  } = details.detail;
+  const { name, url, images, dates, info, _embedded } =
+    details.detail;
+  const [isReadMore, setIsReadMore] = useState(true);
+  const text = info ? info : "not availabe";
+
+  const toggleReadMore = () => {
+    setIsReadMore(!isReadMore);
+  };
 
   return (
     <div>
       <HeaderTwo />
-      <div className={classes.div4}>
-        <Card classes={classes.card}>
-          <img className={classes.img1} src={images[0].url} />
-        </Card>
+      <div>
+        <div className={classes.div2}>
+          <Card className={classes.card1}>
+            <CardContent>
+              <img className={classes.img1} src={images[0].url} alt='picture'/>
+            </CardContent>
+          </Card>
+          <Card className={classes.card2}>
+            <CardContent>
+              <div className={classes.newdiv2}>
+                <span className={classes.event}>EVENT DETAILS</span>
+                <div className={classes.newdiv3}>
+                  <Typography variant="body1" color="success">
+                    Title: {name}
+                  </Typography>
+                  <Typography variant="body1">
+                    <div
+                      style={{
+                        display: "flex",
+                        justifyContent: "space-between!important",
+                        alignItems: "center",
+                      }}
+                    >
+                      <span
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <CalendarMonthIcon />
+                        {dates.start.localDate}
+                      </span>
+                      <span
+                        style={{
+                          display: "flex",
+                          justifyContent: "center",
+                          alignItems: "center",
+                        }}
+                      >
+                        <LocationOnIcon />
+                        {_embedded.venues[0].state.name}
+                      </span>
+                    </div>
+                  </Typography>
 
-        <Card classes={classes.card2}>
-          <CardContent>
-            <div className={classes.card2content}>
-              <span className={classes.event}>EVENT DETAILS</span>
-              <div style={{display:'flex',flexDirection:'column',alignItems:'flex-start',marginTop:'9px'}}>
-                <span className={classes.title}>title: {name}</span>
-                <br/>
-                <span style={{display:'flex', justifyContent:'center' , alignItems:'center'}} >Schedule
-                  <CalendarMonthIcon />
-                  {dates.start.localDate}
-                </span>
-                <br/>
-                <span className={classes.info}>Info:{
-                (info)? info:"Not available"}</span>
-                <span className={classes.info}>Note:{(pleaseNote)? pleaseNote : 'Not available'}</span>
+                  <Typography variant="body1">Info:</Typography>
+                  <span>
+                    {text !== "not available" && isReadMore
+                      ? text.slice(0, 100)
+                      : text.slice(0, 155)}
+                    <span onClick={toggleReadMore} className="read-or-hide">
+                      {isReadMore ? (
+                        <span className={classes.span}>"...read more"</span>
+                      ) : (
+                        <span className={classes.span}>" ...show less"</span>
+                      )}
+                    </span>
+                  </span>
+
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between !important",
+                    }}
+                  >
+                    <Button
+                      variant="contained"
+                      color="success"
+                      className={classes.But2}
+                      onClick={() => navig("/")}
+                    >
+                      <p className={classes.book}>BACK </p>
+                    </Button>
+                    <a href={url}>
+                      <Button
+                        variant="contained"
+                        color="secondary"
+                        className={classes.But1}
+                      >
+                        <p className={classes.book}>BOOK NOW </p>
+                      </Button>
+                    </a>
+                  </div>
+                </div>
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardContent>
+          </Card>
+        </div>
       </div>
-      <Button variant="contained" color="success" className={classes.But2}
-      onClick={() => navig('/')}>
-          <p className={classes.book}>BACK </p>
-        </Button>
-      <a href={url}>
-        <Button variant="contained" color="secondary" className={classes.But1}>
-          <p className={classes.book}>BOOK NOW </p>
-        </Button>
-      </a>
     </div>
   );
 }

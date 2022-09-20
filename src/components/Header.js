@@ -1,14 +1,17 @@
-import React,{useState} from "react";
+import React, { useState } from "react";
 import { makeStyles } from "@mui/styles";
-import { Button, TextField } from "@mui/material";
 import GoogleAuth from "./GoogleAuth";
 import { useDispatch, useSelector } from "react-redux";
 import { selectGenre } from "./redux/ticketAction";
+import useMediaQuery from "@mui/material/useMediaQuery";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   div: {
     backgroundImage: "url('/image/heaser2m.jpg')",
     height: "200px",
+    [theme.breakpoints.down("md")]: {
+      height: "100px",
+    },
   },
   div1: {
     display: "flex",
@@ -35,17 +38,15 @@ const useStyles = makeStyles({
   Hed: {
     cursor: "pointer",
   },
-});
+}));
 function Header() {
   const classes = useStyles();
   const dispatch = useDispatch();
   const [genreVal, setGenreVal] = useState("");
-  const genre = useSelector(state => state.ticket)
-  const search = useSelector(state => state.ticket)
-  const country = useSelector(state => state.ticket)
-  // const handleGenre = () => {
-
-  // }
+  const genre = useSelector((state) => state.ticket);
+  const search = useSelector((state) => state.ticket);
+  const country = useSelector((state) => state.ticket);
+  const header = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
   return (
     <div>
@@ -55,69 +56,100 @@ function Header() {
             <h2 className={classes.Hed}>
               <i>ticketmaster</i>
             </h2>
-            <h4
-              className={classes.hed}
-              name="films"
-              onClick={() => {
-                dispatch(selectGenre("films",search,country));
-                setGenreVal("films");
-              }}
-            >
-              Films
-            </h4>
-            <h4
-              className={classes.hed}
-              name="sports"
-              onClick={() => {
-                dispatch(selectGenre("sports",search,country));
-                setGenreVal("sports");
-              }}
-            >
-              Sports
-            </h4>
-            <h4
-              className={classes.hed}
-              name="arts"
-              onClick={() => {
-                dispatch(selectGenre("arts",search,country));
-                setGenreVal("arts");
-              }}
-            >
-              Arts & Theatre
-            </h4>
-            <h4
-              className={classes.hed}
-              name="family"
-              onClick={() => {
-                dispatch(selectGenre("family",search,country));
-                setGenreVal("family");
-              }}
-            >
-              Family
-            </h4>
-            <h4
-              className={classes.hed}
-              name="music"
-              onClick={() => {
-                dispatch(selectGenre("music",search,country));
-                setGenreVal("music");
-              }}
-            >
-              Music
-            </h4>
-            <h4
-              className={classes.hed}
-              name="miscellaneous"
-              onClick={() => {
-                dispatch(selectGenre("miscellaneous",search,country));
-                setGenreVal("miscellaneous");
-              }}
-            >
-              Miscellaneous
-            </h4>
-            <h4>
-              <GoogleAuth />
-            </h4>
+            {!header && (
+              <>
+                <h4
+                  className={classes.hed}
+                  name="films"
+                  onClick={() => {
+                    dispatch(selectGenre("films", search, country));
+                    setGenreVal("films");
+                  }}
+                >
+                  Films
+                </h4>
+                <h4
+                  className={classes.hed}
+                  name="sports"
+                  onClick={() => {
+                    dispatch(selectGenre("sports", search, country));
+                    setGenreVal("sports");
+                  }}
+                >
+                  Sports
+                </h4>
+                <h4
+                  className={classes.hed}
+                  name="arts"
+                  onClick={() => {
+                    dispatch(selectGenre("arts", search, country));
+                    setGenreVal("arts");
+                  }}
+                >
+                  Arts & Theatre
+                </h4>
+                <h4
+                  className={classes.hed}
+                  name="family"
+                  onClick={() => {
+                    dispatch(selectGenre("family", search, country));
+                    setGenreVal("family");
+                  }}
+                >
+                  Family
+                </h4>
+                <h4
+                  className={classes.hed}
+                  name="music"
+                  onClick={() => {
+                    dispatch(selectGenre("music", search, country));
+                    setGenreVal("music");
+                  }}
+                >
+                  Music
+                </h4>
+                <h4
+                  className={classes.hed}
+                  name="miscellaneous"
+                  onClick={() => {
+                    dispatch(selectGenre("miscellaneous", search, country));
+                    setGenreVal("miscellaneous");
+                  }}
+                >
+                  Miscellaneous
+                </h4>
+                <h4>
+                  <GoogleAuth />
+                </h4>
+              </>
+            )}
+            {header && (
+              <>
+                <h4
+                  className={classes.hed}
+                  name="sports"
+                  onClick={() => {
+                    dispatch(selectGenre("sports", search, country));
+                    setGenreVal("sports");
+                  }}
+                >
+                  Sports
+                </h4>
+                <h4
+                  className={classes.hed}
+                  name="music"
+                  onClick={() => {
+                    dispatch(selectGenre("music", search, country));
+                    setGenreVal("music");
+                  }}
+                >
+                  music
+                </h4>
+                <h4>
+                  <GoogleAuth />
+                </h4>
+              </>
+            )}
           </div>
         </div>
         <div className={classes.div2}>

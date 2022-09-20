@@ -3,7 +3,7 @@ import { makeStyles } from "@mui/styles";
 import GoogleAuth from "./GoogleAuth";
 import { Link } from 'react-router-dom';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   div:{
     backgroundImage: "url('/image/heas642.jpg')",
     height:'90px'
@@ -27,11 +27,20 @@ const useStyles = makeStyles({
   },
   Hed:{
     cursor:'pointer',
-    textDecoration:'none !important',
     color:'white'
+  },
+  link:{
+    textDecoration:'none'
+  },
+  quote:{
+    display:'block',
+    [theme.breakpoints.down('md')]:{
+      display:'none'
+    }
+   
   }
 
-})
+}))
 
 function HeaderTwo() {
   const classes = useStyles()
@@ -39,9 +48,8 @@ function HeaderTwo() {
     <div>
       <div className={classes.div}>
       <div className={classes.div1}>
-       <Link to='/'> <h2 className={classes.Hed}  ><i>ticketmaster</i></h2></Link>
-       {/* <h1>Let's make Live happen</h1> */}
-        <h3>
+       <Link  className={classes.link}  to='/'> <h2 className={classes.Hed}  ><i>ticketmaster</i></h2></Link>
+        <h3 className={classes.quote}>
           Shop millions of live events and discover can't-miss concerts, games,
           theater and more.
         </h3>
