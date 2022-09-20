@@ -5,6 +5,7 @@ import { getEvents } from "./redux/ticketAction";
 import { makeStyles } from "@mui/styles";
 import { Link } from "react-router-dom";
 import { getDetails } from "./redux/ticketAction";
+import LocationOnIcon from '@mui/icons-material/LocationOn';
 
 const useStyles = makeStyles({
   div1:{
@@ -61,6 +62,9 @@ const useStyles = makeStyles({
     display:'grid',
     justifyContent:'flex-start',
     alignContent:'flex-start !important'
+  },
+  details:{
+    padding:'120px'
   }
 })
 
@@ -76,9 +80,8 @@ function Display() {
 
   return (
     <div >
-      <h2>Display Events</h2>
       <div className={classes.div1}>
-      {events.events ? (
+      {events.events[0] ? (
         events.events.map((elem, index) => (
           <><h3 key={index}>
           <Card className={classes.card}>
@@ -89,14 +92,15 @@ function Display() {
             </CardMedia>
             </Link>
             <CardContent className={classes.details}>
-            <div className={classes.cardcontent}> 
-            <p className={classes.timeDate}>{elem.dates.start.localDate}</p>@
-            <p className={classes.timeDate}>{elem.dates.start.localTime}</p>
-            </div>
             <div className={classes.info}>
             <p className={classes.evename}>{elem.name}</p>
+            <div style={{display:'grid', justifyContent:'center' , alignItems:'flex-start'}}>
+            <div style={{display:'flex', justifyContent:'center' , alignItems:'flex-start'}}>
+            <LocationOnIcon/>
             <p className={classes.address}>{elem._embedded.venues[0].address.line1}</p>
+            </div>
             <p className={classes.address}>{elem._embedded.venues[0].city.name}</p>
+            </div>
             </div>
             </CardContent>  
           </Card>

@@ -1,11 +1,13 @@
 //import { act } from "react-dom/test-utils";
-import { API_CALL,API_FAILS, GET_INFO } from "./ticketTypes";
+import { API_CALL,API_FAILS, GET_INFO ,COUNTRY , GENRE, SEARCH_EVE} from "./ticketTypes";
 
 const initialState = {
   events : [],
   error : '',
-  search : [],
-  detail : []
+  detail : [],
+  country :'',
+  genre:'',
+  search:''
 }
 const ticketReducer = (state = initialState,action) => {
   switch(action.type) {
@@ -23,6 +25,18 @@ const ticketReducer = (state = initialState,action) => {
       ...state,
       detail:action.payload
 
+    }
+    case COUNTRY : return {
+      ...state,
+      country:action.payload
+    }
+    case GENRE: return {
+      ...state,
+      genre:action.payload
+    }
+    case SEARCH_EVE: return {
+      ...state,
+      search:action.payload
     }
     default : return state
   }
