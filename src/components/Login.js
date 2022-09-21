@@ -2,7 +2,7 @@ import { GoogleLogin } from "react-google-login";
 import React from "react";
 
 const clientId =
-  "1026215373024-lrtcnlbuc281nm472vph3fvuovhnfa6q.apps.googleusercontent.com";
+process.env.REACT_APP_GOOGLE_KEY;
 
 function Login({ setAction }) {
   const onSuccess = (res) => {

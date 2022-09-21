@@ -1,7 +1,5 @@
-import { exactProp } from "@mui/utils";
 import axios from "axios";
-//import { useSelector } from "react-redux";
-import { API_CALL,API_FAILS,COUNTRY,GENRE,GET_INFO, SEARCH_EVE} from "./ticketTypes";
+import { API_CALL,API_FAILS,COUNTRY,GENRE,GET_INFO, SEARCH_EVE, SET_LOADING} from "./ticketTypes";
 
 
 export const apiCall = (data) => {
@@ -40,10 +38,19 @@ export const setGenre = (genre) => {
     payload:genre
   }
 }
+export const setLoading = (load) => {
+  return {
+    type:SET_LOADING,
+    payload:load
+  }
+}
 
 export const getDetails = (id) => {
+
+  let url = `https://app.ticketmaster.com/discovery/v2/events/${id}.json?apikey=${process.env.REACT_APP_API_KEY}`
+ 
   return (dispatch) => {
-    axios.get(`https://app.ticketmaster.com/discovery/v2/events/${id}.json?apikey=${process.env.REACT_APP_API_KEY}`)
+    axios.get(url)
     .then(response => {
       const detail = response.data
       console.log('single det',detail)

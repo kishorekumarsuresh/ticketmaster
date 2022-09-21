@@ -10,7 +10,7 @@ const useStyles = makeStyles((theme) => ({
     backgroundImage: "url('/image/heaser2m.jpg')",
     height: "200px",
     [theme.breakpoints.down("md")]: {
-      height: "100px",
+      height: "110px",
     },
   },
   div1: {
@@ -19,6 +19,10 @@ const useStyles = makeStyles((theme) => ({
     alignItems: "center",
     fontFamily: "Averta,Helvetica Neue,Helvetica,Arial,sans-serif;",
     color: "white",
+    [theme.breakpoints.down("md")]: {
+      display: "grid",
+      alignItems:'flex-start'
+    },
   },
   div2: {
     fontFamily: "Averta,Helvetica Neue,Helvetica,Arial,sans-serif;",
@@ -37,7 +41,31 @@ const useStyles = makeStyles((theme) => ({
   },
   Hed: {
     cursor: "pointer",
+    [theme.breakpoints.down("md")]: {
+      fontSize:'large'
+    },
   },
+  div4:{
+    display:'flex ',
+    flexDirection:'row !important',
+    justifyContent:'space-between',
+    alignItems:'space-between',
+    
+    
+  },
+  hed1:{
+    marginRight:'8px',
+    marginBottom:'42px',
+    cursor: "pointer",
+     border: ".1px solid white",
+    borderRadius: "10px",
+  
+    padding: "6px",
+    "&:hover": {
+      backgroundColor: "white",
+      color: "black",
+    },
+  }
 }));
 function Header() {
   const classes = useStyles();
@@ -58,6 +86,7 @@ function Header() {
             </h2>
             {!header && (
               <>
+              
                 <h4
                   className={classes.hed}
                   name="films"
@@ -124,9 +153,20 @@ function Header() {
               </>
             )}
             {header && (
-              <>
+              <div className={classes.div4}>
+                
                 <h4
-                  className={classes.hed}
+                  className={classes.hed1}
+                  name="films"
+                  onClick={() => {
+                    dispatch(selectGenre("films", search, country));
+                    setGenreVal("films");
+                  }}
+                >
+                  Films
+                </h4>
+                <h4
+                  className={classes.hed1}
                   name="sports"
                   onClick={() => {
                     dispatch(selectGenre("sports", search, country));
@@ -136,19 +176,39 @@ function Header() {
                   Sports
                 </h4>
                 <h4
-                  className={classes.hed}
+                  className={classes.hed1}
+                  name="arts"
+                  onClick={() => {
+                    dispatch(selectGenre("arts", search, country));
+                    setGenreVal("arts");
+                  }}
+                >
+                  Arts
+                </h4>
+                <h4
+                  className={classes.hed1}
+                  name="family"
+                  onClick={() => {
+                    dispatch(selectGenre("family", search, country));
+                    setGenreVal("family");
+                  }}
+                >
+                  Family
+                </h4>
+                <h4
+                  className={classes.hed1}
                   name="music"
                   onClick={() => {
                     dispatch(selectGenre("music", search, country));
                     setGenreVal("music");
                   }}
                 >
-                  music
+                  Music
                 </h4>
                 <h4>
                   <GoogleAuth />
                 </h4>
-              </>
+              </div>
             )}
           </div>
         </div>
@@ -167,3 +227,4 @@ function Header() {
 }
 
 export default Header;
+

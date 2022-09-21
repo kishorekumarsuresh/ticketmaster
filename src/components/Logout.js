@@ -3,7 +3,7 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 
 const clientId =
-  "1026215373024-lrtcnlbuc281nm472vph3fvuovhnfa6q.apps.googleusercontent.com";
+process.env.REACT_APP_GOOGLE_KEY;
 
 function Logout({ setAction }) {
   const navig = useNavigate();

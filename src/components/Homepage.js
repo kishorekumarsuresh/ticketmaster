@@ -1,8 +1,5 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@mui/styles";
-import CardMedia from "@mui/material/CardMedia";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
 import { selectFromDate, setSearch } from "./redux/ticketAction";
 import Display from "./Display";
 import {
@@ -48,8 +45,7 @@ const useStyles = makeStyles((theme) => ({
     boxShadow: "0.5px 0.5px 0.5px 0.5px grey",
   },
   textField3: {
-    marginTop: "24px !important",
-    boxShadow: "0.5px 0.5px 0.5px 0.5px grey",
+    marginTop: "26px !important",
     width: "450px",
     marginLeft: "0px !important",
     "& .MuiInputBase-root": {
@@ -76,12 +72,11 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("md")]: {
       height: "24px",
       width: "80px",
-      marginLeft:'7px'
+      marginLeft: "7px",
     },
-    marginLeft: "6px",
+    marginLeft: "26px",
     marginRight: "140px",
     boxShadow: "0.5px 0.5px 0.5px 0.5px grey",
-    
   },
   threecomp: {
     display: "flex",
@@ -95,20 +90,17 @@ const useStyles = makeStyles((theme) => ({
     height: "20px",
   },
   typo: {
-    [theme.breakpoints.down("md")]: {
-     
-    },
+    [theme.breakpoints.down("md")]: {},
     marginRight: "122px !important",
   },
   grid1: {
     paddingTop: "11px",
     [theme.breakpoints.down("md")]: {
-      marginLeft:'7px'
+      marginLeft: "7px",
     },
-    
   },
   grid2: {
-    paddingLeft: "19px",
+    paddingLeft: "59px",
     paddingRight: "12px",
     [theme.breakpoints.down("md")]: {
       display: "none",
@@ -119,16 +111,16 @@ const useStyles = makeStyles((theme) => ({
       display: "flex",
     },
   },
-  searchIcon : {
+  searchIcon: {
     width: "40px",
     height: "30px",
     border: ".1px solid grey",
     borderRadius: "6px",
     cursor: "pointer",
-  }
+  },
 }));
 
-function Homepage() {
+function Homepage({load,setLoad}) {
   const classes = useStyles();
   const [searchItem, setSearchItem] = useState("");
   const dispatch = useDispatch();
@@ -208,8 +200,8 @@ function Homepage() {
                 dispatch(setSearch(searchItem));
               }}
             />
-            <SearchIcon 
-            className={classes.searchIcon}
+            <SearchIcon
+              className={classes.searchIcon}
               onClick={() => dispatch(searchEve(searchItem))}
             />
           </div>
@@ -222,17 +214,17 @@ function Homepage() {
               type="date"
               style={{ marginLeft: 2 }}
               name="fromDate"
-              value={date} 
-              onChange={(e) => {setDate(e.target.value)
-              console.log(e.target.value)
-              
+              value={date}
+              onChange={(e) => {
+                setDate(e.target.value);
+                console.log(e.target.value);
               }}
             />
-            <button onClick={() =>dispatch(selectFromDate(date)) }>Go</button>
+            <button onClick={() => dispatch(selectFromDate(date))}>Go</button>
           </label>
         </Grid>
       </div>
-      <Display />
+      <Display load={load} setLoad={setLoad}/>
     </div>
   );
 }

@@ -5,14 +5,14 @@ import {
   CardContent,
   Typography,
   Button,
+  CircularProgress,
 } from "@mui/material";
 import { makeStyles } from "@mui/styles";
 import HeaderTwo from "./HeaderTwo";
-//import { fontSize } from "@mui/system";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { useNavigate } from "react-router-dom";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-
+//import Skeleton from "@mui/material/Skeleton";
 const useStyles = makeStyles((theme) => ({
   newdiv2: {
     display: "flex",
@@ -43,8 +43,6 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("md")]: {
       flexDirection: "column",
       marginLeft: "58px",
-      // paddingLeft:'32px',
-      // paddingDown:'12px'
     },
     flexDirection: "row",
     justifyContent: "center",
@@ -61,7 +59,7 @@ const useStyles = makeStyles((theme) => ({
     padding: ".75rem",
     height: "20px",
     fontFamily: '"Soleil",sans-serif',
-    margin:'0px 5px'
+    margin: "0px 5px",
   },
   event: {
     border: ".1px solid white",
@@ -87,6 +85,7 @@ const useStyles = makeStyles((theme) => ({
   },
   span: {
     color: "blue",
+    cursor: "pointer",
   },
   headertwo: {
     display: "none",
@@ -96,12 +95,11 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Details() {
+function Details({ load }) {
   const classes = useStyles();
   const details = useSelector((state) => state.ticket);
   const navig = useNavigate();
-  const { name, url, images, dates, info, _embedded } =
-    details.detail;
+  const { name, url, images, dates, info, _embedded } = details.detail;
   const [isReadMore, setIsReadMore] = useState(true);
   const text = info ? info : "not availabe";
 
@@ -116,9 +114,23 @@ function Details() {
         <div className={classes.div2}>
           <Card className={classes.card1}>
             <CardContent>
-              <img className={classes.img1} src={images[0].url} alt='picture'/>
+              {load ? (
+                <div style={{ display: "flex", justifyContent:'space-around', padding: '90px 60px'}}>
+                  <CircularProgress color="success" />
+                  <Typography variant="h5" className={classes.load}>
+                    Loading...
+                  </Typography>
+                </div>
+              ) : (
+                <img
+                  className={classes.img1}
+                  src={images[0].url}
+                  alt="picture"
+                />
+              )}
             </CardContent>
           </Card>
+
           <Card className={classes.card2}>
             <CardContent>
               <div className={classes.newdiv2}>
@@ -140,7 +152,7 @@ function Details() {
                           display: "flex",
                           justifyContent: "center",
                           alignItems: "center",
-                          margin:'10px 0px'
+                          margin: "10px 0px",
                         }}
                       >
                         <CalendarMonthIcon />
@@ -159,8 +171,12 @@ function Details() {
                     </div>
                   </Typography>
 
-                  <Typography variant="body1"><u><b>Description</b></u></Typography>
-                  <div style={{textAlign:'justify'}}>
+                  <Typography variant="body1">
+                    <u>
+                      <b>Description</b>
+                    </u>
+                  </Typography>
+                  <div style={{ textAlign: "justify" }}>
                     {text !== "not available" && isReadMore
                       ? text.slice(0, 100)
                       : text.slice(0, 155)}

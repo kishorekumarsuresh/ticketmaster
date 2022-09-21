@@ -5,7 +5,7 @@ import { gapi } from "gapi-script";
 import { Box } from "@mui/material";
 
 const clientId =
-  "1026215373024-lrtcnlbuc281nm472vph3fvuovhnfa6q.apps.googleusercontent.com";
+process.env.REACT_APP_GOOGLE_KEY;
 
 function GoogleAuth() {
   const [action, setAction] = useState(true);

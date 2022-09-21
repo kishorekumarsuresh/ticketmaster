@@ -1,19 +1,20 @@
 import { Card, CardContent, CardMedia } from "@mui/material";
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getEvents } from "./redux/ticketAction";
 import { makeStyles } from "@mui/styles";
 import { Link } from "react-router-dom";
 import { getDetails } from "./redux/ticketAction";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import Snackbar from "@mui/material/Snackbar";
+import Alert from "@mui/material/Alert";
 
-const useStyles = makeStyles ((theme) => ({
+const useStyles = makeStyles((theme) => ({
   div1: {
     display: "flex",
     flexWrap: "wrap",
-    paddingLeft: "25px",
+    paddingLeft: "0 px",
     justifyContent: "space-around",
-  
   },
   card: {
     display: "grid",
@@ -24,7 +25,7 @@ const useStyles = makeStyles ((theme) => ({
     marginTop: "15px",
     boxShadow: "0.5px 0.5px 0.5px 0.5px black",
     cursor: "pointer",
-    //"&:hover": { transform: "scale3d(.05, 1.05, 1)" },
+    //marginLeft:'-10 px'
   },
   cardmedia: {
     "&:hover": { transform: "scale3d(1.07, 1.07, 1)" },
@@ -74,13 +75,26 @@ const useStyles = makeStyles ((theme) => ({
   },
 }));
 
-function Display() {
+function Display({load,setLoad}) {
   const classes = useStyles();
   const events = useSelector((state) => state.ticket);
   const dispatch = useDispatch();
+  const [snack, setSnack] = useState(false);
+
   useEffect(() => {
     dispatch(getEvents());
   }, []);
+  const handleSnack = () =>{
+    setSnack(true)
+  }
+  const handleDetails = (id) => {
+    setLoad(true)
+    setTimeout(()=>
+    setLoad(false),1000
+    )
+    dispatch(getDetails(id))
+    
+  }
 
   return (
     <div>
@@ -97,26 +111,27 @@ function Display() {
                       : null
                   }
                 >
-                  <Card className={classes.card}>
-                    <CardMedia
-                      className={classes.cardmedia}
-                      onClick={() =>
-                        window.sessionStorage.getItem("authKey")
-                          ? dispatch(getDetails(elem.id))
-                          : alert("You must login to access")
-                      }
-                    >
+                  <Card
+                    className={classes.card}
+                    onClick={() =>
+                      window.sessionStorage.getItem("authKey") ? (
+                        handleDetails(elem.id)
+                      ) : (
+                        <Snackbar 
+                        open={snack} 
+                        title='snackbar'
+                        autoHideDuration={3000}
+                        message='You should login to access'
+                        onClose={handleSnack}
+                        />
+                      )
+                    }
+                  >
+                    <CardMedia className={classes.cardmedia}>
                       <img className={classes.img1} src={elem.images[2].url} />
                     </CardMedia>
 
-                    <CardContent
-                      className={classes.details}
-                      onClick={() =>
-                        window.sessionStorage.getItem("authKey")
-                          ? dispatch(getDetails(elem.id))
-                          : alert("You must login to access")
-                      }
-                    >
+                    <CardContent className={classes.details}>
                       <div className={classes.info}>
                         <p className={classes.evename}>{elem.name}</p>
                         <div
@@ -150,9 +165,10 @@ function Display() {
             </>
           ))
         ) : (
-          <>
-            <h3>No Data found</h3>
-          </>
+          <div style={{display:'flex',justifyContent:'center',paddingTop:'20px'}}>
+            
+            <img src='/image/results.png' height='300px' width='400px' alt='pict'/>
+          </div>
         )}
       </div>
     </div>
