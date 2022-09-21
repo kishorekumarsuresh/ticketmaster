@@ -21,14 +21,7 @@ function GoogleAuth() {
     gapi.load("client:auth2", start);
   });
   return (
-    <Box
-      sx={{
-        display: "flex",
-        flexDirection: "row",
-        justifyContent: "space-between",
-        marginRight: 0,
-      }}
-    >
+    <Box>
       {action ? (
         <Login setAction={setAction} />
       ) : (

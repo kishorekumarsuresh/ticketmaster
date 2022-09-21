@@ -4,4 +4,3 @@ export const GET_INFO = "GET_INFO"
 export const SEARCH_EVE = "SEARCH_EVE"
 export const COUNTRY = "COUNTRY"
 export const GENRE = "GENRE"
-//export const ACCESS = 

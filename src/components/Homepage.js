@@ -1,9 +1,9 @@
-import React, { useState,  useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { makeStyles } from "@mui/styles";
 import CardMedia from "@mui/material/CardMedia";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
-import { setSearch } from "./redux/ticketAction";
+import { selectFromDate, setSearch } from "./redux/ticketAction";
 import Display from "./Display";
 import {
   TextField,
@@ -15,11 +15,7 @@ import {
   Grid,
 } from "@mui/material";
 import Header from "./Header";
-import {
-  searchEve,
-  selectCountry,
-  setGenre,
-} from "./redux/ticketAction";
+import { searchEve, selectCountry, setGenre } from "./redux/ticketAction";
 import { useDispatch } from "react-redux";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import SearchIcon from "@mui/icons-material/Search";
@@ -77,9 +73,15 @@ const useStyles = makeStyles((theme) => ({
   select: {
     height: "34px",
     width: "120px",
+    [theme.breakpoints.down("md")]: {
+      height: "24px",
+      width: "80px",
+      marginLeft:'7px'
+    },
     marginLeft: "6px",
     marginRight: "140px",
     boxShadow: "0.5px 0.5px 0.5px 0.5px grey",
+    
   },
   threecomp: {
     display: "flex",
@@ -93,13 +95,21 @@ const useStyles = makeStyles((theme) => ({
     height: "20px",
   },
   typo: {
+    [theme.breakpoints.down("md")]: {
+     
+    },
     marginRight: "122px !important",
   },
   grid1: {
     paddingTop: "11px",
+    [theme.breakpoints.down("md")]: {
+      marginLeft:'7px'
+    },
+    
   },
   grid2: {
     paddingLeft: "19px",
+    paddingRight: "12px",
     [theme.breakpoints.down("md")]: {
       display: "none",
     },
@@ -109,6 +119,13 @@ const useStyles = makeStyles((theme) => ({
       display: "flex",
     },
   },
+  searchIcon : {
+    width: "40px",
+    height: "30px",
+    border: ".1px solid grey",
+    borderRadius: "6px",
+    cursor: "pointer",
+  }
 }));
 
 function Homepage() {
@@ -154,7 +171,7 @@ function Homepage() {
           <div className={classes.box1}>
             <TextField
               className={classes.textField3}
-              placeholder="Search for artist, venues , events  "
+              placeholder="Search for events "
               value={searchItem}
               onChange={(e) => {
                 setSearchItem(e.target.value);
@@ -191,30 +208,28 @@ function Homepage() {
                 dispatch(setSearch(searchItem));
               }}
             />
-            <SearchIcon
-              sx={{
-                width: "40px",
-                height: "30px",
-                border: ".1px solid grey",
-                borderRadius: "6px",
-                cursor: "pointer",
-              }}
+            <SearchIcon 
+            className={classes.searchIcon}
               onClick={() => dispatch(searchEve(searchItem))}
             />
           </div>
         )}
 
         <Grid className={classes.grid2}>
-          <Typography className={classes.typo}>Select Dates</Typography>
-          <DatePicker
-            className={classes.datepick}
-            selected={date}
-            onChange={(val) => {
-              setDate(val);
-              console.log(val);
-            }}
-            dateFormat="dd/MM/yyyy"
-          />
+          <Typography className={classes.typo}>Select Date</Typography>
+          <label style={{ display: "flex" }}>
+            <input
+              type="date"
+              style={{ marginLeft: 2 }}
+              name="fromDate"
+              value={date} 
+              onChange={(e) => {setDate(e.target.value)
+              console.log(e.target.value)
+              
+              }}
+            />
+            <button onClick={() =>dispatch(selectFromDate(date)) }>Go</button>
+          </label>
         </Grid>
       </div>
       <Display />

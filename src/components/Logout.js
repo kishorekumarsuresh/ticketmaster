@@ -6,12 +6,12 @@ const clientId =
   "1026215373024-lrtcnlbuc281nm472vph3fvuovhnfa6q.apps.googleusercontent.com";
 
 function Logout({ setAction }) {
-  const navig = useNavigate()
+  const navig = useNavigate();
   const onSuccess = () => {
-    window.sessionStorage.removeItem("authKey")
+    window.sessionStorage.removeItem("authKey");
     //localStorage.removeItem("token");
     setAction(true);
-    navig('/')
+    navig("/");
     console.log("Log out Successfull");
   };
   return (

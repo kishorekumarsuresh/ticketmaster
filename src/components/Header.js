@@ -54,7 +54,7 @@ function Header() {
         <div>
           <div className={classes.div1}>
             <h2 className={classes.Hed}>
-              <i>ticketmaster</i>
+              <em>Ticketmaster</em>
             </h2>
             {!header && (
               <>

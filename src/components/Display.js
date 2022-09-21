@@ -7,12 +7,13 @@ import { Link } from "react-router-dom";
 import { getDetails } from "./redux/ticketAction";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles ((theme) => ({
   div1: {
     display: "flex",
     flexWrap: "wrap",
     paddingLeft: "25px",
     justifyContent: "space-around",
+  
   },
   card: {
     display: "grid",
@@ -71,7 +72,7 @@ const useStyles = makeStyles({
   link: {
     textDecoration: "none",
   },
-});
+}));
 
 function Display() {
   const classes = useStyles();
@@ -88,7 +89,14 @@ function Display() {
           events.events.map((elem, index) => (
             <>
               <h3 key={index}>
-                <Link className={classes.link} to={window.sessionStorage.getItem("authKey") ?`details/${elem.id}`: null}>
+                <Link
+                  className={classes.link}
+                  to={
+                    window.sessionStorage.getItem("authKey")
+                      ? `details/${elem.id}`
+                      : null
+                  }
+                >
                   <Card className={classes.card}>
                     <CardMedia
                       className={classes.cardmedia}
@@ -103,10 +111,11 @@ function Display() {
 
                     <CardContent
                       className={classes.details}
-                      onClick={() => 
+                      onClick={() =>
                         window.sessionStorage.getItem("authKey")
-                      ? dispatch(getDetails(elem.id))
-                      : alert("You must login to access")}
+                          ? dispatch(getDetails(elem.id))
+                          : alert("You must login to access")
+                      }
                     >
                       <div className={classes.info}>
                         <p className={classes.evename}>{elem.name}</p>

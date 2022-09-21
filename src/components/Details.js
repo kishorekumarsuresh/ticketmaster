@@ -21,13 +21,13 @@ const useStyles = makeStyles((theme) => ({
   },
   card1: {
     width: "370px",
-    height: "320px",
+    height: "355px",
 
     "&:hover": { transform: "scale3d(1.03, 1.03, 1) !important" },
   },
   card2: {
     width: "430px",
-    height: "320px",
+    height: "355px",
     marginLeft: "31px !important",
     [theme.breakpoints.down("md")]: {
       marginLeft: "-1px !important",
@@ -36,7 +36,7 @@ const useStyles = makeStyles((theme) => ({
   },
   img1: {
     width: "350px",
-    height: "280px",
+    height: "295px",
   },
   div2: {
     display: "flex",
@@ -61,6 +61,7 @@ const useStyles = makeStyles((theme) => ({
     padding: ".75rem",
     height: "20px",
     fontFamily: '"Soleil",sans-serif',
+    margin:'0px 5px'
   },
   event: {
     border: ".1px solid white",
@@ -124,7 +125,7 @@ function Details() {
                 <span className={classes.event}>EVENT DETAILS</span>
                 <div className={classes.newdiv3}>
                   <Typography variant="body1" color="success">
-                    Title: {name}
+                    <b> {name} </b>
                   </Typography>
                   <Typography variant="body1">
                     <div
@@ -139,6 +140,7 @@ function Details() {
                           display: "flex",
                           justifyContent: "center",
                           alignItems: "center",
+                          margin:'10px 0px'
                         }}
                       >
                         <CalendarMonthIcon />
@@ -157,8 +159,8 @@ function Details() {
                     </div>
                   </Typography>
 
-                  <Typography variant="body1">Info:</Typography>
-                  <span>
+                  <Typography variant="body1"><u><b>Description</b></u></Typography>
+                  <div style={{textAlign:'justify'}}>
                     {text !== "not available" && isReadMore
                       ? text.slice(0, 100)
                       : text.slice(0, 155)}
@@ -169,7 +171,7 @@ function Details() {
                         <span className={classes.span}>" ...show less"</span>
                       )}
                     </span>
-                  </span>
+                  </div>
 
                   <div
                     style={{

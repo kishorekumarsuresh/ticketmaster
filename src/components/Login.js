@@ -6,7 +6,7 @@ const clientId =
 
 function Login({ setAction }) {
   const onSuccess = (res) => {
-    window.sessionStorage.setItem("authKey",res.accessToken)
+    window.sessionStorage.setItem("authKey", res.accessToken);
     //localStorage.setItem("token", res.accessToken);
     setAction(false);
     console.log("Login Success!!!", res);

@@ -1,7 +1,7 @@
 import { exactProp } from "@mui/utils";
 import axios from "axios";
 //import { useSelector } from "react-redux";
-import {API_CALL,API_FAILS,COUNTRY,GENRE,GET_INFO, SEARCH_EVE} from "./ticketTypes";
+import { API_CALL,API_FAILS,COUNTRY,GENRE,GET_INFO, SEARCH_EVE} from "./ticketTypes";
 
 
 export const apiCall = (data) => {
@@ -43,7 +43,7 @@ export const setGenre = (genre) => {
 
 export const getDetails = (id) => {
   return (dispatch) => {
-    axios.get(`https://app.ticketmaster.com/discovery/v2/events/${id}.json?apikey=5AlwKYOWzIHre84OfsJbjlsBJ0djSiT9`)
+    axios.get(`https://app.ticketmaster.com/discovery/v2/events/${id}.json?apikey=${process.env.REACT_APP_API_KEY}`)
     .then(response => {
       const detail = response.data
       console.log('single det',detail)
@@ -105,54 +105,11 @@ export const selectGenre = (genre,search,country) => {
         console.log('genre response fails',errMsg)
         dispatch(apiFails(errMsg))
       })
-    // dispatch(selectGenre(genre))
-    // if (genre && search && country){
-    //   axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?classificationName=${genre}&countryCode=${country}&apikey=${process.env.REACT_APP_API_KEY}`)
-    //   .then(response => {
-    //     const resp = response.data._embedded.events
-    //     console.log('genre response succeeds',resp)
-    //     dispatch(apiCall(resp))
-    //   })
-    //   .catch(err => {
-    //     const errMsg = err.message
-    //     console.log('genre response fails',errMsg)
-    //     dispatch(apiFails(errMsg))
-    //   })
-    // }
-    // else if (genre && country) {
-    //   axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?classificationName=${genre}&countryCode=${country}&apikey=${process.env.REACT_APP_API_KEY}`)
-    //   .then(response => {
-    //     const resp = response.data._embedded.events
-    //     console.log('genre response succeeds',resp)
-    //     dispatch(apiCall(resp))
-    //   })
-    //   .catch(err => {
-    //     const errMsg = err.message
-    //     console.log('genre response fails',errMsg)
-    //     dispatch(apiFails(errMsg))
-    //   })
-    // }
-    // else {
-    //   axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?classificationName=${genre}&apikey=${process.env.REACT_APP_API_KEY}`)
-    //   .then(response => {
-    //     const resp = response.data._embedded.events
-    //     console.log('genre response succeeds',resp)
-    //     dispatch(apiCall(resp))
-    //   })
-    //   .catch(err => {
-    //     const errMsg = err.message
-    //     console.log('genre response fails',errMsg)
-    //     dispatch(apiFails(errMsg))
-    //   })
-    // }
-    
-    
   }
 }
 
 export const selectCountry = (country) => {
   return (dispatch) => {
-    //dispatch(setCountry(country))
     axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?countryCode=${country}&apikey=${process.env.REACT_APP_API_KEY}`)
     .then(response => {
       const resp = response.data._embedded.events
@@ -162,6 +119,22 @@ export const selectCountry = (country) => {
     .catch(err => {
       const errMsg = err.message
       console.log('country response fails',errMsg)
+      dispatch(apiFails(errMsg))
+    })
+  }
+}
+
+export const selectFromDate = (date) => {
+  return (dispatch) => {
+    axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?startDateTime=${date}T14:00:00Z&apikey=5AlwKYOWzIHre84OfsJbjlsBJ0djSiT9`)
+    .then(response => {
+      const resp = response.data._embedded.events
+      console.log('date response succeeds',resp)
+      dispatch(apiCall(resp))
+    })
+    .catch(err => {
+      const errMsg = err.message
+      console.log('date response fails',errMsg)
       dispatch(apiFails(errMsg))
     })
   }

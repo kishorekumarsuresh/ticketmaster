@@ -1,5 +1,5 @@
 //import { act } from "react-dom/test-utils";
-import { API_CALL,API_FAILS, GET_INFO ,COUNTRY , GENRE, SEARCH_EVE, ACCESS} from "./ticketTypes";
+import { API_CALL,API_FAILS, GET_INFO ,COUNTRY , GENRE, SEARCH_EVE} from "./ticketTypes";
 
 const initialState = {
   events : [],
@@ -39,10 +39,6 @@ const ticketReducer = (state = initialState,action) => {
       ...state,
       search:action.payload
     }
-    // case ACCESS: return {
-    //   ...state,
-    //   access:true
-    // }
     default : return state
   }
 }
