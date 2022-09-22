@@ -1,7 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { makeStyles } from "@mui/styles";
-import { selectFromDate, setSearch } from "./redux/ticketAction";
+import { setGenre, setSearch, setCountry } from "./redux/ticketAction";
 import Display from "./Display";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 import {
   TextField,
   Button,
@@ -12,10 +14,11 @@ import {
   Grid,
 } from "@mui/material";
 import Header from "./Header";
-import { searchEve, selectCountry, setGenre } from "./redux/ticketAction";
-import { useDispatch } from "react-redux";
+import { searchEve, selectCountry, selectFromDate } from "./redux/ticketAction";
+import { useDispatch, useSelector } from "react-redux";
 import useMediaQuery from "@mui/material/useMediaQuery";
 import SearchIcon from "@mui/icons-material/Search";
+import * as moment from "moment";
 
 const useStyles = makeStyles((theme) => ({
   div1: {
@@ -93,6 +96,9 @@ const useStyles = makeStyles((theme) => ({
     [theme.breakpoints.down("md")]: {},
     marginRight: "122px !important",
   },
+  typo1:{
+    marginRight: "122px !important",
+  },
   grid1: {
     paddingTop: "11px",
     [theme.breakpoints.down("md")]: {
@@ -118,22 +124,49 @@ const useStyles = makeStyles((theme) => ({
     borderRadius: "6px",
     cursor: "pointer",
   },
+  dateBut:{
+    height:'29px',
+    width:'12px !important',
+    size:'large'
+  },
+  datepick:{
+    width:'100px',
+    height:'27px'
+  }
 }));
 
-function Homepage({load,setLoad}) {
+function Homepage({ load, setLoad }) {
   const classes = useStyles();
   const [searchItem, setSearchItem] = useState("");
   const dispatch = useDispatch();
+  const genre = useSelector((state) => state.ticket);
   const [country, setCountry] = useState("");
   const [date, setDate] = useState("");
   const search = useMediaQuery((theme) => theme.breakpoints.down("md"));
-  useEffect(() => {
-    handleFilter();
-  }, [country]);
+  const handleDate = () => {
+    //console.log(date)
+    const newdate = date.toLocaleDateString()
+    console.log('new',newdate,typeof(newdate))
+    const arr = newdate.split("/")
+    console.log(arr)
+    if (arr[0].length == 1){
+      arr[0]='0'+arr[0]
+    }
+    if (arr[1].length ==1){
+      arr[1]='0'+arr[1]
+    }
+    const finalDate = arr[2]+'-'+arr[1]+'-'+arr[0]
+    console.log('api',finalDate)
+    dispatch(selectFromDate(finalDate))
+    //console.log(date.toLocaleString().slice(0,10));
+    
+  };
 
-  const handleFilter = () => {
-    console.log(country, "country");
-    dispatch(selectCountry(country));
+  const handleFilter = (val) => {
+    console.log("val");
+    setCountry(val);
+    console.log(val, "country", genre.genre, "genre");
+    dispatch(selectCountry(val, genre.genre));
   };
 
   return (
@@ -147,8 +180,7 @@ function Homepage({load,setLoad}) {
               className={classes.select}
               value={country}
               onChange={(e) => {
-                setCountry(e.target.value);
-                dispatch(setGenre(country));
+                handleFilter(e.target.value);
               }}
             >
               <MenuItem value="AT">Austria</MenuItem>
@@ -210,21 +242,26 @@ function Homepage({load,setLoad}) {
         <Grid className={classes.grid2}>
           <Typography className={classes.typo}>Select Date</Typography>
           <label style={{ display: "flex" }}>
-            <input
-              type="date"
-              style={{ marginLeft: 2 }}
-              name="fromDate"
-              value={date}
-              onChange={(e) => {
-                setDate(e.target.value);
-                console.log(e.target.value);
-              }}
+            <DatePicker
+              className={classes.datepick}
+              selected={date}
+              onChange={(date) => setDate(date)}
+              dateFormat="dd/MM/yyyy"
+              //formatDate={(date) => set(date.)}
             />
-            <button onClick={() => dispatch(selectFromDate(date))}>Go</button>
+            <Button
+              className={classes.dateBut}
+              color='secondary'
+              variant='contained'
+              onClick={() => handleDate() }
+              date
+            >
+              Go
+            </Button>
           </label>
         </Grid>
       </div>
-      <Display load={load} setLoad={setLoad}/>
+      <Display load={load} setLoad={setLoad} />
     </div>
   );
 }

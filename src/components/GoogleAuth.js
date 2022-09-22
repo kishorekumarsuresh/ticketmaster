@@ -4,8 +4,9 @@ import Logout from "./Logout";
 import { gapi } from "gapi-script";
 import { Box } from "@mui/material";
 
-const clientId =
-process.env.REACT_APP_GOOGLE_KEY;
+
+const clientId =process.env.REACT_APP_GOOGLE_KEY;
+
 
 function GoogleAuth() {
   const [action, setAction] = useState(true);

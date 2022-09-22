@@ -6,6 +6,7 @@ import { makeStyles } from "@mui/styles";
 import { Link } from "react-router-dom";
 import { getDetails } from "./redux/ticketAction";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
+import Backdrop from "@mui/material/Backdrop";
 import Snackbar from "@mui/material/Snackbar";
 import Alert from "@mui/material/Alert";
 
@@ -75,26 +76,34 @@ const useStyles = makeStyles((theme) => ({
   },
 }));
 
-function Display({load,setLoad}) {
+function Display({ load, setLoad }) {
   const classes = useStyles();
   const events = useSelector((state) => state.ticket);
   const dispatch = useDispatch();
-  const [snack, setSnack] = useState(false);
+  const [snack, setSnack] = useState(true);
 
   useEffect(() => {
     dispatch(getEvents());
   }, []);
-  const handleSnack = () =>{
-    setSnack(true)
-  }
+
+  const handleBackdrop = () => {
+    alert('Login to see')
+    return (
+        <Backdrop
+          sx={{ color: "#fff", zIndex: (theme) => theme.zIndex.drawer + 1 }}
+          open={snack}
+          onClick={() => setSnack(false)}
+        >
+          You must login to access the event !!!
+        </Backdrop>
+    );
+  };
+
   const handleDetails = (id) => {
-    setLoad(true)
-    setTimeout(()=>
-    setLoad(false),1000
-    )
-    dispatch(getDetails(id))
-    
-  }
+    setLoad(true);
+    setTimeout(() => setLoad(false), 1000);
+    dispatch(getDetails(id));
+  };
 
   return (
     <div>
@@ -114,17 +123,9 @@ function Display({load,setLoad}) {
                   <Card
                     className={classes.card}
                     onClick={() =>
-                      window.sessionStorage.getItem("authKey") ? (
-                        handleDetails(elem.id)
-                      ) : (
-                        <Snackbar 
-                        open={snack} 
-                        title='snackbar'
-                        autoHideDuration={3000}
-                        message='You should login to access'
-                        onClose={handleSnack}
-                        />
-                      )
+                      window.sessionStorage.getItem("authKey")
+                        ? handleDetails(elem.id)
+                        : handleBackdrop()
                     }
                   >
                     <CardMedia className={classes.cardmedia}>
@@ -165,9 +166,19 @@ function Display({load,setLoad}) {
             </>
           ))
         ) : (
-          <div style={{display:'flex',justifyContent:'center',paddingTop:'20px'}}>
-            
-            <img src='/image/results.png' height='300px' width='400px' alt='pict'/>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              paddingTop: "20px",
+            }}
+          >
+            <img
+              src="/image/results.png"
+              height="300px"
+              width="400px"
+              alt="pict"
+            />
           </div>
         )}
       </div>

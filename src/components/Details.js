@@ -12,7 +12,7 @@ import HeaderTwo from "./HeaderTwo";
 import CalendarMonthIcon from "@mui/icons-material/CalendarMonth";
 import { useNavigate } from "react-router-dom";
 import LocationOnIcon from "@mui/icons-material/LocationOn";
-//import Skeleton from "@mui/material/Skeleton";
+
 const useStyles = makeStyles((theme) => ({
   newdiv2: {
     display: "flex",

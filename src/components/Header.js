@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { makeStyles } from "@mui/styles";
 import GoogleAuth from "./GoogleAuth";
 import { useDispatch, useSelector } from "react-redux";
-import { selectGenre } from "./redux/ticketAction";
+import { selectGenre ,setGenre } from "./redux/ticketAction";
 import useMediaQuery from "@mui/material/useMediaQuery";
 
 const useStyles = makeStyles((theme) => ({
@@ -76,6 +76,15 @@ function Header() {
   const country = useSelector((state) => state.ticket);
   const header = useMediaQuery((theme) => theme.breakpoints.down("md"));
 
+  // useEffect(() => {
+  //   handleGenre()
+  // },[genreVal])
+
+  const handleGenre = (val) => {
+    dispatch(setGenre(val,country.country))
+    console.log('country',country.country)
+    dispatch(selectGenre(val, country.country))
+  }
   return (
     <div>
       <div className={classes.div}>
@@ -91,8 +100,7 @@ function Header() {
                   className={classes.hed}
                   name="films"
                   onClick={() => {
-                    dispatch(selectGenre("films", search, country));
-                    setGenreVal("films");
+                    handleGenre("films")
                   }}
                 >
                   Films
@@ -100,9 +108,8 @@ function Header() {
                 <h4
                   className={classes.hed}
                   name="sports"
-                  onClick={() => {
-                    dispatch(selectGenre("sports", search, country));
-                    setGenreVal("sports");
+                  onClick={(e) => {
+                    handleGenre("sports")
                   }}
                 >
                   Sports
@@ -110,9 +117,8 @@ function Header() {
                 <h4
                   className={classes.hed}
                   name="arts"
-                  onClick={() => {
-                    dispatch(selectGenre("arts", search, country));
-                    setGenreVal("arts");
+                  onClick={(e) => {
+                    handleGenre("arts")
                   }}
                 >
                   Arts & Theatre
@@ -120,9 +126,8 @@ function Header() {
                 <h4
                   className={classes.hed}
                   name="family"
-                  onClick={() => {
-                    dispatch(selectGenre("family", search, country));
-                    setGenreVal("family");
+                  onClick={(e) => {
+                    handleGenre("family")
                   }}
                 >
                   Family
@@ -130,9 +135,8 @@ function Header() {
                 <h4
                   className={classes.hed}
                   name="music"
-                  onClick={() => {
-                    dispatch(selectGenre("music", search, country));
-                    setGenreVal("music");
+                  onClick={(e) => {
+                    handleGenre("music");
                   }}
                 >
                   Music
@@ -140,9 +144,8 @@ function Header() {
                 <h4
                   className={classes.hed}
                   name="miscellaneous"
-                  onClick={() => {
-                    dispatch(selectGenre("miscellaneous", search, country));
-                    setGenreVal("miscellaneous");
+                  onClick={(e) => {
+                    handleGenre("miscellaneous");
                   }}
                 >
                   Miscellaneous
@@ -227,4 +230,3 @@ function Header() {
 }
 
 export default Header;
-

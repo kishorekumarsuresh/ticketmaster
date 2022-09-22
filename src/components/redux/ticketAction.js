@@ -32,10 +32,11 @@ export const setCountry = (country) => {
     payload:country
   }
 }
-export const setGenre = (genre) => {
+export const setGenre = (genre,country) => {
   return{
     type:GENRE,
-    payload:genre
+    payload1:genre,
+    payload2:country
   }
 }
 export const setLoading = (load) => {
@@ -55,12 +56,10 @@ export const getDetails = (id) => {
       const detail = response.data
       console.log('single det',detail)
       dispatch(getInfo(detail))
-
     })
     .catch(err => {
       const errMsg = err.message
       console.log('second response fails',errMsg)
-
     })
     
   }
@@ -68,7 +67,7 @@ export const getDetails = (id) => {
 
 export const getEvents = () =>{
   return (dispatch) => {
-    axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&size=20&apikey=${process.env.REACT_APP_API_KEY}`)
+    axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?countryCode=US&apikey=${process.env.REACT_APP_API_KEY}`)
     .then(response => {
       const resp = response.data._embedded.events
       console.log('first response succeeds',resp)
@@ -99,9 +98,16 @@ export const searchEve = (search) => {
   }
 }
 
-export const selectGenre = (genre,search,country) => {
+export const selectGenre = (genre,country) => {
+  let url = ''
+  if (genre && country){
+    url = `https://app.ticketmaster.com/discovery/v2/events.json?classificationName=${genre}&countryCode=${country}&apikey=${process.env.REACT_APP_API_KEY}`
+  }
+  else{
+    url = `https://app.ticketmaster.com/discovery/v2/events.json?classificationName=${genre}&apikey=${process.env.REACT_APP_API_KEY}`
+  }
   return (dispatch) => {
-    axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?classificationName=${genre}&apikey=${process.env.REACT_APP_API_KEY}`)
+    axios.get(url)
       .then(response => {
         const resp = response.data._embedded.events
         console.log('genre response succeeds',resp)
@@ -115,9 +121,19 @@ export const selectGenre = (genre,search,country) => {
   }
 }
 
-export const selectCountry = (country) => {
+export const selectCountry = (country,genre) => {
+  let url = ''
+  if (country && genre){
+    console.log(country,genre)
+    url = `https://app.ticketmaster.com/discovery/v2/events.json?classificationName=${genre}&countryCode=${country}&apikey=${process.env.REACT_APP_API_KEY}`
+  }
+  else {
+    console.log(country)
+    url = `https://app.ticketmaster.com/discovery/v2/events.json?countryCode=${country}&apikey=${process.env.REACT_APP_API_KEY}`
+  }
+  
   return (dispatch) => {
-    axios.get(`https://app.ticketmaster.com/discovery/v2/events.json?countryCode=${country}&apikey=${process.env.REACT_APP_API_KEY}`)
+    axios.get(url)
     .then(response => {
       const resp = response.data._embedded.events
       console.log('country response succeeds',resp)

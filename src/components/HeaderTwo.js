@@ -58,7 +58,7 @@ function HeaderTwo() {
             games, theater and more.
           </h3>
           <h4>
-            <GoogleAuth />
+            {/* <GoogleAuth /> */}
           </h4>
         </div>
       </div>

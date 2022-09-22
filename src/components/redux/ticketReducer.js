@@ -8,7 +8,7 @@ const initialState = {
   country :'',
   genre:'',
   search:'',
-  access:false
+  snack : false
 }
 const ticketReducer = (state = initialState,action) => {
   switch(action.type) {
@@ -16,6 +16,7 @@ const ticketReducer = (state = initialState,action) => {
       ...state,
       events : action.payload,
       error:'',
+      
     }
     case API_FAILS :return {
       ...state,
@@ -33,7 +34,8 @@ const ticketReducer = (state = initialState,action) => {
     }
     case GENRE: return {
       ...state,
-      genre:action.payload
+      genre:action.payload1,
+      country:action.payload2
     }
     case SEARCH_EVE: return {
       ...state,
